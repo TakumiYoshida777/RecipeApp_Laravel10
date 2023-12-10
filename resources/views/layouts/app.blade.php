@@ -10,13 +10,16 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        <link rel="stylesheet" href="{{ asset('css/color.css') }}">
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
-            @include('layouts.navigation')
+    <body class="font-sans antialiased background-color">
+        <div class="min-h-screen">
+            {{-- ここに共通のヘッダーコンポーネントを読み込む --}}
+            @include('layouts.announce-header')
+            @include('layouts.global-header')
 
             <!-- Page Heading -->
             @if (isset($header))
@@ -28,9 +31,16 @@
             @endif
 
             <!-- Page Content -->
-            <main>
+            <main class="container mx-auto pt-8">
                 {{ $slot }}
             </main>
+            {{-- LaravelのBladeテンプレートエンジンでは、{{ $slot }}は親ビュー（この場合はapp.blade.php）で子ビュー（この場合はdashboard.blade.php）の内容を表示するためのプレースホルダーとして機能します。
+
+            dashboard.blade.phpの内容は、app.blade.phpの{{ $slot }}に挿入されます。これは、x-slotタグを使用せずとも可能です。x-slotは、名前付きスロットを定義するためのもので、特定の部分に特定のビューを挿入するために使用されます。
+
+            したがって、You're logged in!メッセージはdashboard.blade.phpからapp.blade.phpの{{ $slot }}に挿入され、結果として表示されます。 --}}
         </div>
+
+        @include('layouts.footer')
     </body>
 </html>
