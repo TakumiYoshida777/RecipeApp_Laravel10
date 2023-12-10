@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Recipe;
 use Illuminate\Http\Request;
 
@@ -38,7 +39,9 @@ class RecipeController extends Controller
             ->orderby('recipes.created_at', 'desc')
             ->get();
 
-            return view('recipes.index',compact('recipes'));
+            $categories = Category::all();
+
+            return view('recipes.index',compact('recipes','categories'));
     }
 
     /**
