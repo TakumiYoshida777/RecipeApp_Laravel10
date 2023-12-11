@@ -1,9 +1,13 @@
 <x-app-layout>
     <div class="grid grid-cols-3 gap-4">
         <div class="col-span-2 bg-white rounded p-4">
+            <div class="mb-4">
+                {{ Breadcrumbs::render('index') }}
+            </div>
             @foreach ($recipes as $recipe)
                 @include('recipes.partial.horizontal-card')
             @endforeach
+            {{ $recipes->links() }}
         </div>
         <div class="col-span-1 p-4 bg-white h-max sticky top-4">
             <form action="{{ route('recipe.index') }}" method="GET">
@@ -19,16 +23,19 @@
                 <div class="mb-4 p-6 border border-gray-300">
                     <label class="text-lg text-gray-800">評価</label>
                     <div class="ml-4 mb-2">
-                        <input type="radio" name="rating" value="0" id="rating0" checked />
-
+                        <input type="radio" name="rating" value="0" id="rating0"
+                            {{ ($filters['rating'] ?? null) == null ? 'checked' : '' }} />
+                        <!-- もしratingのフィルターがあったら、空文字を返す、そうでなければ ’checked'を返す -->
                         <label for="rating0">指定しない</label>
                     </div>
                     <div class="ml-4 mb-2">
-                        <input type="radio" name="rating" value="3" id="rating3" />
+                        <input type="radio" name="rating" value="3" id="rating3"
+                            {{ ($filters['rating'] ?? null) == '3' ? 'checked' : '' }} />
                         <label for="rating3">3以上</label>
                     </div>
                     <div class="ml-4 mb-2">
-                        <input type="radio" name="rating" value="4" id="rating4" />
+                        <input type="radio" name="rating" value="4" id="rating4"
+                            {{ ($filters['rating'] ?? null) == '4' ? 'checked' : '' }} />
                         <label for="rating4">4以上</label>
                     </div>
                 </div>
@@ -37,17 +44,18 @@
                     @foreach ($categories as $category)
                         <div class="ml-4 mb-2">
                             <input type="checkbox" name="categories[]" value="{{ $category['id'] }}"
-                                id="category{{ $category['id'] }}" />
+                                id="category{{ $category['id'] }}"
+                                {{ in_array($category['id'], $filters['categories'] ?? []) ? 'checked' : '' }} />
                             <label for="category{{ $category['id'] }}">{{ $category['name'] }}</label>
                         </div>
                     @endforeach
 
                 </div>
-                <input type="text" name="title" value="" placeholder="レシピ名を入力"
+                <input type="text" name="title" value="{{ $filters['title'] ?? '' }}" placeholder="レシピ名を入力"
                     class="border border-gray-400 p-2 mb-4 w-full">
                 <div class="text-center">
                     <button type="submit"
-                    class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">検索</button>
+                        class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">検索</button>
                 </div>
             </form>
         </div>

@@ -5,43 +5,69 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Recipe;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 class RecipeController extends Controller
 {
 
-    public function home(){
+    public function home()
+    {
         //新着のレシピを新しい順に３件取得する
-        $recipes = Recipe::select('recipes.id', 'recipes.title', 'recipes.description','recipes.image','recipes.created_at')
-        ->join('users','users.id', '=','recipes.user_id')
-        ->orderby('recipes.created_at', 'desc')
-        ->limit(3)
-        ->get();
+        $recipes = Recipe::select('recipes.id', 'recipes.title', 'recipes.description', 'recipes.image', 'recipes.created_at')
+            ->join('users', 'users.id', '=', 'recipes.user_id')
+            ->orderby('recipes.created_at', 'desc')
+            ->limit(3)
+            ->get();
         // dd($recipes);
 
-        $popular = Recipe::select('recipes.id', 'recipes.title', 'recipes.description','recipes.image','recipes.views','recipes.created_at')
-        ->join('users','users.id', '=','recipes.user_id')
-        ->orderby('recipes.views', 'desc')
-        ->limit(2)
-        ->get();
+        $popular = Recipe::select('recipes.id', 'recipes.title', 'recipes.description', 'recipes.image', 'recipes.views', 'recipes.created_at')
+            ->join('users', 'users.id', '=', 'recipes.user_id')
+            ->orderby('recipes.views', 'desc')
+            ->limit(2)
+            ->get();
         // dd($popular);
 
-        return view('home',compact('recipes','popular'));
+        return view('home', compact('recipes', 'popular'));
     }
 
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-            //新着のレシピを新しい順に３件取得する
-            $recipes = Recipe::select('recipes.id', 'recipes.title', 'recipes.description','recipes.image','recipes.created_at')
-            ->join('users','users.id', '=','recipes.user_id')
-            ->orderby('recipes.created_at', 'desc')
-            ->get();
+        $filters = $request->all();
+        // dd($filters);
+        $query = Recipe::query()->select('recipes.id', 'recipes.title', 'recipes.description', 'recipes.created_at', 'recipes.image', 'users.name'
+        // , DB::raw('AVG(reviews.rating) as rating')
+        )
+            ->join('users', 'users.id', '=', 'recipes.user_id')
+            ->leftJoin('reviews', 'reviews.recipe_id', '=', 'recipes.id')
+            // ->groupBy('recipes.id')
+            ->orderBy('recipes.created_at', 'desc');
 
-            $categories = Category::all();
+        if( !empty($filters) ) {
+                // もしカテゴリーが選択されていたら
+            if( !empty($filters['categories']) ) {
+                // カテゴリーで絞り込み選択したカテゴリーIDが含まれているレシピを取得
+                $query->whereIn('recipes.category_id', $filters['categories']);
+            }
+            if( !empty($filters['rating']) ) {
+                // 評価で絞り込み
+                // $query->havingRaw('AVG(reviews.rating) >= ?', [$filters['rating']])->orderBy('rating', 'desc');
+                // TODO:エラーでできなかった：セクション7→49
+            }
+            if ($filters['title']) {
+                // キーワード検索　※部分一致検索
+                $query->where('recipes.title', 'like', '%'. $filters['title']. '%');
+            }
+        }
+        $recipes = $query->paginate(5);
+        // dd($recipes);
 
-            return view('recipes.index',compact('recipes','categories'));
+        $categories = Category::all();
+
+        return view('recipes.index', compact('recipes', 'categories','filters'));
     }
 
     /**
@@ -65,7 +91,7 @@ class RecipeController extends Controller
      */
     public function show(string $id)
     {
-        //
+        dd($id);
     }
 
     /**
