@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Ingredient extends Model
 {
     use HasFactory;
+
+    public function refresh()
+    {
+        return $this->bilongsTo(Recipe::class);
+    }
 }

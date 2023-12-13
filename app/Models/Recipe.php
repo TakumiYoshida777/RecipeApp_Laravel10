@@ -14,4 +14,31 @@ class Recipe extends Model
     protected $casts = [
         'id' => 'string'
     ];
+
+    public function category()
+    {
+        return $this->bilongsTo(Category::class);
+    }
+
+    public function ingredients()
+    {
+        return $this->hasMany(Ingredient::class);
+    }
+    //    ingredientsをhasOneとすることは間違っています。hasManyを使用するべきです。
+    //    ingredientsは1つのレシピに複数の材料が含まれる可能性があるため、
+    //    hasManyを使って関連付けるべきです。
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function steps()
+    {
+        return $this->hasMany(Step::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

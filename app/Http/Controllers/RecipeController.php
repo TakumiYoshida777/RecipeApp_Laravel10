@@ -91,7 +91,19 @@ class RecipeController extends Controller
      */
     public function show(string $id)
     {
-        dd($id);
+        //リレーションで材料とステップを取得 ※リレーションプロパティに格納
+        $recipe = Recipe::with(['ingredients', 'steps', 'reviews.user','user'])
+        ->where('recipes.id', $id)
+        ->first();
+
+
+        //viewsカラムの値を１つずふやす。今回は閲覧数（PV）として活用
+        $recipe_record = Recipe::find($id);
+        $recipe_record->increment('views');
+        // dd($recipe);
+
+        return view('recipes.show',compact('recipe'));
+
     }
 
     /**
