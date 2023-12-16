@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Recipe;
+use App\Models\Step;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 
 class RecipeController extends Controller
@@ -75,7 +78,8 @@ class RecipeController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+        return view('recipes.create',compact('categories'));
     }
 
     /**
@@ -83,7 +87,36 @@ class RecipeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $posts = $request->all();
+        $uuid = Str::uuid()->toString();
+        // dd($posts);
+        $steps =[];
+
+        foreach($posts['steps'] as $key => $step) {
+            $steps[$key] = [
+                'recipe_id' => $uuid,
+                'step_number' => $key + 1,
+                'description' => $step
+            ];
+        }
+
+        // dd($steps);
+
+        Recipe::insert([
+            'id' => $uuid,
+            'title' => $posts['title'],
+            'description' => $posts['description'],
+            'user_id' => Auth::id(),
+            'category_id' => $posts['category'],
+        ]);
+        // $dir = 'images';
+        // $imagePath = $posts['image']->store('public/'. $dir);
+        // dd( $imagePath);
+        // 画像の保存に成功したら、$imagePath をデータベースに保存するなどの処理を行う
+
+        Step::insert($steps);
+
+        return redirect()->route('recipe.index');
     }
 
     /**
@@ -96,14 +129,12 @@ class RecipeController extends Controller
         ->where('recipes.id', $id)
         ->first();
 
-
         //viewsカラムの値を１つずふやす。今回は閲覧数（PV）として活用
         $recipe_record = Recipe::find($id);
         $recipe_record->increment('views');
         // dd($recipe);
 
         return view('recipes.show',compact('recipe'));
-
     }
 
     /**

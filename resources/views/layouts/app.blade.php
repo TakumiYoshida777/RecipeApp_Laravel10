@@ -14,6 +14,9 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @if (isset($script))
+           {{ $script }}
+        @endif
     </head>
     <body class="font-sans antialiased background-color">
         <div class="min-h-screen">
