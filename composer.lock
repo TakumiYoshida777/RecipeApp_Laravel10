@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "04bac481e36485831384abefb8d26fe3",
+    "content-hash": "5cf1c38a5c1d759103ad653f7c21c281",
     "packages": [
         {
             "name": "brick/math",
@@ -3368,6 +3368,67 @@
             "time": "2023-11-08T05:53:05+00:00"
         },
         {
+            "name": "spatie/laravel-flash",
+            "version": "1.9.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-flash.git",
+                "reference": "f0417044fd5c6be9082fe42fe793e5ccaadf29df"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-flash/zipball/f0417044fd5c6be9082fe42fe793e5ccaadf29df",
+                "reference": "f0417044fd5c6be9082fe42fe793e5ccaadf29df",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/session": "^8.0|^9.0|^10.0",
+                "php": "^7.4|^8.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^6.23|^7.0|^8.0",
+                "phpunit/phpunit": "^9.4"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/helpers.php"
+                ],
+                "psr-4": {
+                    "Spatie\\Flash\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A lightweight package to flash messages",
+            "homepage": "https://github.com/spatie/laravel-flash",
+            "keywords": [
+                "laravel-flash",
+                "spatie"
+            ],
+            "support": {
+                "issues": "https://github.com/spatie/laravel-flash/issues",
+                "source": "https://github.com/spatie/laravel-flash/tree/1.9.1"
+            },
+            "funding": [
+                {
+                    "url": "https://spatie.be/open-source/support-us",
+                    "type": "custom"
+                }
+            ],
+            "time": "2023-01-23T14:53:09+00:00"
+        },
+        {
             "name": "symfony/console",
             "version": "v6.4.1",
             "source": {
@@ -5896,6 +5957,88 @@
     ],
     "packages-dev": [
         {
+            "name": "askdkc/breezejp",
+            "version": "v1.7.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/askdkc/breezejp.git",
+                "reference": "5691d1c3e0d2432baf203a7bbe933b972ea5ba0a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/askdkc/breezejp/zipball/5691d1c3e0d2432baf203a7bbe933b972ea5ba0a",
+                "reference": "5691d1c3e0d2432baf203a7bbe933b972ea5ba0a",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^9.28|^10.0",
+                "php": "^8.0",
+                "spatie/laravel-package-tools": "^1.14.0"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.4",
+                "nunomaduro/collision": "^6.0|^7.0",
+                "nunomaduro/larastan": "^2.0",
+                "orchestra/testbench": "^7.7|^8.0",
+                "pestphp/pest": "^1.22|^2.0",
+                "phpstan/extension-installer": "^1.2",
+                "phpunit/phpunit": "^9.5.27|^10.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Askdkc\\Breezejp\\BreezejpServiceProvider"
+                    ],
+                    "aliases": {
+                        "Breezejp": "Askdkc\\Breezejp\\Facades\\Breezejp"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Askdkc\\Breezejp\\": "src",
+                    "Askdkc\\Breezejp\\Database\\Factories\\": "database/factories"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "askdkc",
+                    "email": "askdkc@users.noreply.github.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Laravel Breeze(とLaravel UIとJetstream)を標準の各種バリデーションや言語設定、タイムスタンプも含めて一瞬で日本語化対応＆言語切替機能も追加 / This package provides Japanese translation for Laravel Breeze, Laravel UI and Jetstream package with language switching feature. It also privides Japanese validation messages",
+            "homepage": "https://github.com/askdkc/breezejp",
+            "keywords": [
+                "breeze",
+                "japanese",
+                "jetstream",
+                "laravel",
+                "laravel ui",
+                "translation"
+            ],
+            "support": {
+                "issues": "https://github.com/askdkc/breezejp/issues",
+                "source": "https://github.com/askdkc/breezejp/tree/v1.7.3"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/askdkc",
+                    "type": "github"
+                },
+                {
+                    "url": "https://ko-fi.com/askdkc",
+                    "type": "ko_fi"
+                }
+            ],
+            "time": "2023-11-24T11:02:47+00:00"
+        },
+        {
             "name": "barryvdh/laravel-debugbar",
             "version": "v3.9.2",
             "source": {
@@ -8422,6 +8565,66 @@
                 }
             ],
             "time": "2023-10-09T12:55:26+00:00"
+        },
+        {
+            "name": "spatie/laravel-package-tools",
+            "version": "1.16.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-package-tools.git",
+                "reference": "cc7c991555a37f9fa6b814aa03af73f88026a83d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-package-tools/zipball/cc7c991555a37f9fa6b814aa03af73f88026a83d",
+                "reference": "cc7c991555a37f9fa6b814aa03af73f88026a83d",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^9.28|^10.0",
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.5",
+                "orchestra/testbench": "^7.7|^8.0",
+                "pestphp/pest": "^1.22",
+                "phpunit/phpunit": "^9.5.24",
+                "spatie/pest-plugin-test-time": "^1.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\LaravelPackageTools\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Tools for creating Laravel packages",
+            "homepage": "https://github.com/spatie/laravel-package-tools",
+            "keywords": [
+                "laravel-package-tools",
+                "spatie"
+            ],
+            "support": {
+                "issues": "https://github.com/spatie/laravel-package-tools/issues",
+                "source": "https://github.com/spatie/laravel-package-tools/tree/1.16.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/spatie",
+                    "type": "github"
+                }
+            ],
+            "time": "2023-08-23T09:04:39+00:00"
         },
         {
             "name": "symfony/yaml",

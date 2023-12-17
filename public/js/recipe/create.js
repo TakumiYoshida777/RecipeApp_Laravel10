@@ -1,7 +1,6 @@
 'use strict';
 
 const stepNo = document.querySelectorAll(".stepNo");
-
 const steps = document.getElementById('steps');
 const ingredients = document.getElementById('ingredients');
 const stepDeleteIcons = document.querySelectorAll(".step-delete");
@@ -11,6 +10,19 @@ const oneStepRecord = document.querySelector(".step");
 const ingredientItem = document.querySelector(".ingredient-item");
 
 
+//画像
+const preview = document.getElementById('preview');
+const image = document.getElementById('image-data');
+image.addEventListener('change', (e) => {
+    let file = e.target.files[0];
+    if(file){
+        let reader = new FileReader();
+        reader.onload = (e) => {
+            preview.src = e.target.result;
+        }
+        reader.readAsDataURL(file);
+    }
+});
 
 /**
  * 番号を振りなおす
@@ -72,24 +84,42 @@ console.log(steps, "steps");
 
 
 
-//行を追加する
+/**
+ * 行を追加する
+ * @param {*} e
+ */
 const addRecord = (e) => {
     //ステップ
     if(e.target.closest('.step-add')){
         const addRecord = steps.appendChild(oneStepRecord.cloneNode(true));
         sortNomber();
         addRecord.querySelector('.step-delete').addEventListener('click',handleRecodeDelete);
+        //クローンした行の入力値をクリア
+        const items = steps.querySelectorAll('.step');
+        let lastItems = items[items.length - 1];
+        console.log(lastItems.querySelector('input'), "lastItems");
+        lastItems.querySelector('input').value = '';
     }
     //材料
     else if(e.target.closest('.ingredient-add')){
         // const newIngredientItem =ingredientItem.value="";
-        console.log(ingredientItem)
+        // console.log(ingredientItem)
         const addRecord = ingredients.appendChild(ingredientItem.cloneNode(true));
         sortNomber();
         addRecord.querySelector('.step-delete').addEventListener('click',handleRecodeDelete);
         indexRestartIngredent();
+        //クローンした行の入力値をクリア
+        const items = ingredients.querySelectorAll('.ingredient-item');
+        let lastItems = items[items.length - 1];
+        console.log(lastItems.querySelector('input'), "lastItems");
+        lastItems.querySelector('input').value = '';
     }
 }
+
+
+
+
+/**************押下処理****************/
 
 /**
  * ステップのプラスボタン押下処理
